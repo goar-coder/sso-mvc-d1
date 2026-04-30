@@ -1,0 +1,47 @@
+Contexto:
+Actúa como un Ingeniero Senior de Software y DevOps. Debes implementar un sistema de Single Sign-On (SSO) basado en el archivo arquitectura.md que tengo en mi workspace.
+
+Configuración del Entorno:
+
+Sistema: WSL (Ubuntu).
+
+Entorno Virtual: Crea un único venv en la carpeta raíz del proyecto y utilízalo para instalar todas las dependencias de D1, D2 y D3.
+
+Base de Datos: MySQL 8.0 en Docker (4 bases de datos: keycloak_db, d1_db, d2_db, d3_db).
+
+Identidad: D1 es el Identity Provider (OIDC), Keycloak es el Broker y D2/D3 son Clientes OIDC de Keycloak.
+
+Tareas a realizar:
+
+Infraestructura:
+
+Crea el docker-compose.yml con MySQL y Keycloak.
+
+Crea mysql/init.sql para inicializar las bases de datos y permisos.
+
+Dependencias:
+
+Crea un archivo requirements.txt en la raíz que incluya: django, django-oauth-toolkit, mozilla-django-oidc, mysqlclient, python-dotenv.
+
+Instala todo en el venv de la raíz.
+
+Implementación de Aplicaciones (D1, D2, D3):
+
+Genera las 3 carpetas y los proyectos Django.
+
+D1 (Puerto 8001): Configúralo como Servidor OIDC usando django-oauth-toolkit. Crea un superusuario y registra la "Application" necesaria para Keycloak.
+
+D2 (Puerto 8002) y D3 (Puerto 8003): Configúralos como clientes OIDC apuntando a Keycloak.
+
+Configuración de Keycloak:
+
+Genera el realm-export.json para que Keycloak arranque con el Identity Provider (apuntando a D1) y los Clients (D2 y D3) ya configurados.
+
+Automatización de Arranque:
+
+Crea un script run_apps.sh que ejecute las migraciones de las 3 apps y levante los 3 servidores de desarrollo de Django simultáneamente (usando & o procesos separados).
+
+Regla de Oro:
+Asegúrate de que las URLs de redirección (Callback URLs) estén correctamente configuradas. En OIDC, la precisión en los endpoints es crítica para que el SSO funcione.
+Ya las depencias de linux estan instaladas
+¡Comienza creando el venv, instalando los requisitos y levantando la infraestructura Docker!
